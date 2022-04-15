@@ -2336,18 +2336,46 @@ let gray = function(myCharId) {
     letters[myCharId] = 'darkgray'    
 };
 
-let displayWords = function() {
+let pageON = 0;
+let min = pageON * 100 - 1;
+let max = min + 99;
+
+let next = function() {
+    pageON++;
+    min = pageON * 100 - 1;
+    max = min + 99;
+    displayWords(min, max);
+};
+
+let previous = function() {
+    pageON = pageON - 1;
+    min = pageON * 100 - 1;
+    max = min + 99;
+    console.log("Previous")
+    displayWords(min, max);
+};
+
+let displayWords = function(minWord, maxWord) {
     let wordsElement = document.getElementById("words");
     wordsElement.innerText = "";
 
     let theEntireWordList = '';
+    let i = 0;
+    let j = 0
 
     for (let key of list.keys()) {
         if (list.get(key) === true) {
-            theEntireWordList = theEntireWordList + "\n" + key;
+            if (i > minWord && i < maxWord) {
+                theEntireWordList = theEntireWordList + "\n" + key;
+            };
+            i++
         };
     };
-    wordsElement.innerText = theEntireWordList 
+    wordsElement.innerText = theEntireWordList
+
+    let pageON = 0;
+    let min = pageON * 100 - 1;
+    let max = min + 99;
 };
 
 let myword = function() {
@@ -2412,7 +2440,7 @@ let enter = function() {
             };
         };
     };
-    displayWords();
+    displayWords(min, max);
 };
 
-displayWords();
+displayWords(min, max);
